@@ -29,9 +29,12 @@ namespace paint_mouse_event
 
         private void Form1_MouseDown(object sender, MouseEventArgs e)
         {
-            draw = true;
-            x = e.X;
-            y = e.Y;
+            if (e.Button == MouseButtons.Left)
+            {
+                draw = true;
+                x = e.X;
+                y = e.Y;
+            }
         }
 
         private void Form1_MouseMove(object sender, MouseEventArgs e)
@@ -47,7 +50,6 @@ namespace paint_mouse_event
         private void Form1_MouseUp(object sender, MouseEventArgs e)
         {
             draw = false;
-            MessageBox.Show("Mouse Up Event Triggered");
         }
 
         private void colorToolStripMenuItem1_Click(object sender, EventArgs e)
