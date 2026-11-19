@@ -9,7 +9,9 @@ namespace paint_mouse_event
     {
         Graphics g;     // зурах цаас
         Pen p;          // үзэг
+        Pen eraser;     // баллуур
         bool draw;      // хулганы товч дарагдсан эсэх
+        bool isErasing; // арилгаж байгаа эсэх
         int x, y;       // өмнөх цэгийн координат
 
         public Form1()
@@ -25,7 +27,13 @@ namespace paint_mouse_event
             p = new Pen(Color.Black, 2);
             p.StartCap = LineCap.Round;
             p.EndCap = LineCap.Round;
+
+            eraser = new Pen(this.BackColor, 15);
+            eraser.StartCap = LineCap.Round;
+            eraser.EndCap = LineCap.Round;
+
             draw = false;
+            isErasing = false;
         }
 
         private void Form1_MouseDown(object sender, MouseEventArgs e)
@@ -33,6 +41,14 @@ namespace paint_mouse_event
             if (e.Button == MouseButtons.Left)
             {
                 draw = true;
+                isErasing = false;
+                x = e.X;
+                y = e.Y;
+            }
+            else if (e.Button == MouseButtons.Right)
+            {
+                draw = true;
+                isErasing = true;
                 x = e.X;
                 y = e.Y;
             }
@@ -43,7 +59,8 @@ namespace paint_mouse_event
             this.Text = $"Paint - Координат: ({e.X}, {e.Y}) | Өнгө: {p.Color.Name}";
             if (draw)
             {
-                g.DrawLine(p, x, y, e.X, e.Y);
+                Pen activePen = isErasing ? eraser : p;
+                g.DrawLine(activePen, x, y, e.X, e.Y);
                 x = e.X;
                 y = e.Y;
             }
@@ -52,6 +69,7 @@ namespace paint_mouse_event
         private void Form1_MouseUp(object sender, MouseEventArgs e)
         {
             draw = false;
+            isErasing = false;
         }
 
         private void colorToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -69,6 +87,9 @@ namespace paint_mouse_event
 
         private void button1_Click(object sender, EventArgs e)
         {
+            p?.Dispose();
+            eraser?.Dispose();
+            g?.Dispose();
             Close();
         }
 
