@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
 namespace paint_mouse_event
@@ -19,7 +20,10 @@ namespace paint_mouse_event
         private void Form1_Load(object sender, EventArgs e)
         {
             g = this.CreateGraphics();
+            g.SmoothingMode = SmoothingMode.AntiAlias;
             p = new Pen(Color.Black, 2);
+            p.StartCap = LineCap.Round;
+            p.EndCap = LineCap.Round;
             draw = false;
         }
 
@@ -79,7 +83,6 @@ namespace paint_mouse_event
             if (colorDialog1.ShowDialog() == DialogResult.OK)
             {
                 p.Color = colorDialog1.Color;
-
             }
         }
         private void label1_Click(object sender, EventArgs e) { }
