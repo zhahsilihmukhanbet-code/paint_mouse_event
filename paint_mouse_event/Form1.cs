@@ -19,6 +19,7 @@ namespace paint_mouse_event
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            this.Text = "Paint - Зурах програм";
             g = this.CreateGraphics();
             g.SmoothingMode = SmoothingMode.AntiAlias;
             p = new Pen(Color.Black, 2);
@@ -39,6 +40,7 @@ namespace paint_mouse_event
 
         private void Form1_MouseMove(object sender, MouseEventArgs e)
         {
+            this.Text = $"Paint - Координат: ({e.X}, {e.Y}) | Өнгө: {p.Color.Name}";
             if (draw)
             {
                 g.DrawLine(p, x, y, e.X, e.Y);
